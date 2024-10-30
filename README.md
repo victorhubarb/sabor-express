@@ -24,7 +24,7 @@
    ```
 2. Run the main project file:
    ```bash
-   python main.py
+   python app.py
    ```
 
 ## Usage
