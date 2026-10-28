@@ -1,64 +1,39 @@
-# Sabor Express 🍽️
+# Sabor Express
 
-![Status](https://img.shields.io/badge/status-completed-green?style=for-the-badge)
-![Python](https://img.shields.io/badge/Python-3-blue?style=for-the-badge&logo=python)
+A terminal app in Python for managing a list of restaurants: register one, list them, and switch each between active and inactive. It was my first Python project.
 
-A terminal-based restaurant management system built in Python — my first Python project, focused on core language fundamentals, clean function design, and a polished terminal UI.
+The menu, prompts and messages are in Portuguese.
 
----
-
-## Overview
-
-Sabor Express simulates the backend of a food delivery platform. Restaurants can be registered, listed, and toggled between active and inactive states — all through a menu-driven terminal interface. The project was built to get comfortable with Python's core features: dictionaries, lists, functions with docstrings, f-strings, and exception handling. The terminal is cleared between screens using `os.system('clear')` for a cleaner user experience.
-
----
-
-## Architecture
+## What it does
 
 ```
-sabor-express/
-└── app.py              # Entire application — data, business logic, and UI in one file
+1. Cadastrar restaurante            register: name and category, starts inactive
+2. Listar restaurante               table with name, category and status
+3. Alternar estado do restaurante   look one up by name and flip active/inactive
+4. Sair                             exit
 ```
 
-### Key Python Concepts Applied
+The list starts with three sample restaurants. Data lives in memory, so it resets every time the program closes.
 
-| Concept | How it shows up |
-|---|---|
-| **Dictionaries** | Each restaurant is a `dict` with `nome`, `categoria`, and `ativo` keys |
-| **List of dicts** | `restaurantes` is a global list of dicts — the app's main data structure |
-| **Functions with docstrings** | `cadastrar_novo_restaurante()` has a full docstring documenting inputs and outputs |
-| **f-strings** | Used throughout for dynamic output — including `ljust()` for aligned table columns |
-| **Toggle with `not`** | `restaurante['ativo'] = not restaurante['ativo']` — flips the status in one line |
-| **try/except** | `escolher_opcao()` wraps input parsing in try/except to handle non-integer input gracefully |
-| **os.system('clear')** | Terminal is cleared between screens via `exibir_subtitulo()` for a cleaner UX |
-| **`if __name__ == '__main__'`** | Standard Python entry point pattern |
-| **Modular design** | Each feature is its own function — `cadastrar_novo_restaurante()`, `listar_restaurantes()`, `alternar_estado_restaurante()` |
+Everything is in `app.py`. Each restaurant is a dict (`nome`, `categoria`, `ativo`) in one list, and every menu action is its own function. The code uses f-strings with `ljust()` for the table columns, a docstring on the register function, and `not` to flip the status.
 
----
+## Run it
 
-## Features
-
-- **Register Restaurant** — add a new restaurant with name and category; starts as inactive
-- **List Restaurants** — displays all restaurants in a formatted table with name, category, and status
-- **Toggle Status** — activate or deactivate a restaurant by name
-- **Exit** — closes the application cleanly
-
----
-
-## How to Run
-
-**Prerequisites:** Python 3 installed
+Requires Python 3.12 or newer (the f-strings reuse the same quote type inside the expression, which older versions reject). The screen clearing uses `clear`, so it works on macOS and Linux. On Windows, change it to `cls`.
 
 ```bash
 git clone https://github.com/victorhubarb/sabor-express.git
 cd sabor-express
-
-python app.py
+python3 app.py
 ```
+
+## Known gaps
+
+- Nothing is saved to disk.
+- The menu calls `main()` again after every action, so a long session keeps stacking calls. A `while` loop would be cleaner.
+- `escolher_opcao()` uses a bare `except`, which hides any error, not only bad input.
+- Duplicate names are allowed, and the toggle matches names exactly (case-sensitive).
 
 ---
 
-## Author
-
-**Victor Hugo Barbosa**
-[GitHub](https://github.com/victorhubarb) · [LinkedIn](https://www.linkedin.com/in/victorhbarbosa/)
+Victor Hugo Barbosa · [GitHub](https://github.com/victorhubarb) · [LinkedIn](https://www.linkedin.com/in/victorhbarbosa/)
